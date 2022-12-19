@@ -1,5 +1,6 @@
 .profile__container {
   display: flex;
+  justify-content: center;
   margin: 26px 19px 14px 46px;
   gap: 10px;
   align-items: baseline;
