@@ -1,12 +1,23 @@
 .place__like {
   width: 22px;
   height: 19px;
-  background-image: url('../../../images/like-vector.svg');
+  border: none;
+  background-color: white;
+  background-image: url('../../../images/like-white-vector.svg');
   background-position: center center;
   background-repeat: no-repeat;
   background-size: 22px 19px;
-  border: none;
-  background-color: white;
   padding: 0;
   flex-shrink: 0;
+  color: white;
+  transition: all 0.2s ease;
+}
+
+.place__like:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+.place__like:active {
+  background-image: url('../../../images/like-black-vector.svg');
 }
