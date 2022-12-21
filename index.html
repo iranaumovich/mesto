@@ -76,12 +76,23 @@
           </div>
         </div>
       </section>
-
-      <footer class="footer">
-        <p class="footer__copyright">&#169; 2022 Mesto Russia</p>
-      </footer>
-
     </main>
+
+    <footer class="footer">
+      <p class="footer__copyright">&#169; 2022 Mesto Russia</p>
+    </footer>
+
+    <section class="popup popup_opened">
+      <div class="popup__container">
+        <form class="form">
+          <h2 class="form__heading">Редактировать профиль</h2>
+          <input type="text" class="form__item" id="name" name="name" placeholder="Ваше имя">
+          <input type="text" class="form__item" id="about" name="about" placeholder="Пару слов о себе">
+          <button type="submit" class="form__button">Сохранить</button>
+        </form>
+        <button class="popup__close-button"></button>
+      </div>
+    </section>
 
   </div>
 </body>
