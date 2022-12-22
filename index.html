@@ -82,13 +82,14 @@
       <p class="footer__copyright">&#169; 2022 Mesto Russia</p>
     </footer>
 
-    <section class="popup popup_opened">
+    <section class="popup">
       <div class="popup__container">
         <form class="form">
           <h2 class="form__heading">Редактировать профиль</h2>
-          <input type="text" class="form__item" id="name" name="name" placeholder="Ваше имя" value="Христофор Колумб">
-          <input type="text" class="form__item" id="about" name="about" placeholder="Пару слов о себе"
-            value="Исследователь земель">
+          <input type="text" class="form__item form__item_type_name" id="name" name="name" placeholder="Ваше имя"
+            value="Христофор Колумб">
+          <input type="text" class="form__item form__item_type_description" id="about" name="about"
+            placeholder="Пару слов о себе" value="Исследователь земель">
           <button type="submit" class="form__button">Сохранить</button>
         </form>
         <button class="popup__close-button"></button>
@@ -96,6 +97,9 @@
     </section>
 
   </div>
+
+  <script src="./script.js"></script>
+
 </body>
 
 </html>
