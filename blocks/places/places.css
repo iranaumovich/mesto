@@ -11,6 +11,7 @@
 
 @media screen and (min-width: 321px) {
   .places {
+    margin-top: 51px;
     column-gap: 17px;
   }
 }
