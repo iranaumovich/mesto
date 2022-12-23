@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Место</title>
   <link rel="stylesheet" href="./pages/index.css">
 </head>
 
@@ -21,84 +21,88 @@
       <section class="profile">
         <img class="profile__avatar" src="./images/profile-avatar.jpg" alt="Аватар">
 
-        <div class="profile__info">
+        <article class="profile__info">
           <div class="profile__container">
             <h1 class="profile__title">Христофор Колумб</h1>
-            <button type="button" class="profile__edit-button"></button>
+            <button type="button" class="profile__edit-button" aria-label="кнопка для редактирования профиля"></button>
           </div>
           <p class="profile__subtitle">Исследователь земель</p>
-        </div>
+        </article>
 
-        <button type="button" class="profile__add-button"></button>
+        <button type="button" class="profile__add-button"
+          aria-label="кнопка для добавления фотографий в профиль"></button>
       </section>
 
-      <section class="places">
-        <div class="place">
-          <img class="place__image" src="./images/card-stonehenge.jpg" alt="Стоунхендж">
-          <div class="place__description">
-            <h2 class="place__title">Стоунхендж</h2>
-            <button type="button" class="place__like"></button>
-          </div>
-        </div>
-        <div class="place">
-          <img class="place__image" src="./images/card-sphinx.jpg" alt="Пирамида Хеопса">
-          <div class="place__description">
-            <h2 class="place__title">Большой Сфинкс</h2>
-            <button class="place__like"></button>
-          </div>
-        </div>
-        <div class="place">
-          <img class="place__image" src="./images/card-zeus.jpg" alt="Зевс в Олимпии">
-          <div class="place__description">
-            <h2 class="place__title">Зевс в Олимпии</h2>
-            <button class="place__like"></button>
-          </div>
-        </div>
-        <div class="place">
-          <img class="place__image" src="./images/card-mausoleum.jpg" alt="Мавзолей в Галикарнасе">
-          <div class="place__description">
-            <h2 class="place__title">Мавзолей в Галикарнасе</h2>
-            <button class="place__like"></button>
-          </div>
-        </div>
-        <div class="place">
-          <img class="place__image" src="./images/card-machu-picchu.jpg" alt="Мачу Пикчу">
-          <div class="place__description">
-            <h2 class="place__title">Мачу Пикчу</h2>
-            <button class="place__like"></button>
-          </div>
-        </div>
-        <div class="place">
-          <img class="place__image" src="./images/card-petra.jpg" alt="Петра">
-          <div class="place__description">
-            <h2 class="place__title">Петра</h2>
-            <button class="place__like"></button>
-          </div>
-        </div>
+      <section>
+        <ul class="places">
+          <li class="place">
+            <img class="place__image" src="./images/card-stonehenge.jpg" alt="Стоунхендж">
+            <div class="place__description">
+              <h2 class="place__title">Стоунхендж</h2>
+              <button type="button" class="place__like" aria-label="кнопка-лайк на фотографию"></button>
+            </div>
+          </li>
+          <li class="place">
+            <img class="place__image" src="./images/card-sphinx.jpg" alt="Пирамида Хеопса">
+            <div class="place__description">
+              <h2 class="place__title">Большой Сфинкс</h2>
+              <button type="button" class="place__like" aria-label="кнопка-лайк на фотографию"></button>
+            </div>
+          </li>
+          <li class="place">
+            <img class="place__image" src="./images/card-zeus.jpg" alt="Зевс в Олимпии">
+            <div class="place__description">
+              <h2 class="place__title">Зевс в Олимпии</h2>
+              <button type="button" class="place__like" aria-label="кнопка-лайк на фотографию"></button>
+            </div>
+          </li>
+          <li class="place">
+            <img class="place__image" src="./images/card-mausoleum.jpg" alt="Мавзолей в Галикарнасе">
+            <div class="place__description">
+              <h2 class="place__title">Мавзолей в Галикарнасе</h2>
+              <button type="button" class="place__like" aria-label="кнопка-лайк на фотографию"></button>
+            </div>
+          </li>
+          <li class="place">
+            <img class="place__image" src="./images/card-machu-picchu.jpg" alt="Мачу Пикчу">
+            <div class="place__description">
+              <h2 class="place__title">Мачу Пикчу</h2>
+              <button type="button" class="place__like" aria-label="кнопка-лайк на фотографию"></button>
+            </div>
+          </li>
+          <li class="place">
+            <img class="place__image" src="./images/card-petra.jpg" alt="Петра">
+            <div class="place__description">
+              <h2 class="place__title">Петра</h2>
+              <button type="button" class="place__like" aria-label="кнопка-лайк на фотографию"></button>
+            </div>
+          </li>
+        </ul>
       </section>
     </main>
 
     <footer class="footer">
-      <p class="footer__copyright">&#169; 2022 Mesto Russia</p>
+      <p class="footer__copyright" lang="en">&#169; 2022 Mesto Russia</p>
     </footer>
 
-    <section class="popup">
+    <div class="popup">
       <div class="popup__container">
-        <form class="form">
-          <h2 class="form__heading">Редактировать профиль</h2>
+        <h2 class="form__heading">Редактировать профиль</h2>
+        <form class="form" name="EditProfilForm">
           <input type="text" class="form__item form__item_type_name" id="name" name="name" placeholder="Ваше имя"
             value="Христофор Колумб">
           <input type="text" class="form__item form__item_type_description" id="about" name="about"
             placeholder="Пару слов о себе" value="Исследователь земель">
-          <button type="submit" class="form__button">Сохранить</button>
+          <button type="submit" class="form__button" aria-label="кнопка чтобы сохранить изменения">Сохранить</button>
         </form>
-        <button class="popup__close-button"></button>
+        <button type=" button" class="popup__close-button"
+          aria-label="кнопка чтобы закрыть окно редактирования профиля"></button>
       </div>
-    </section>
+    </div>
 
   </div>
 
-  <script src="./scripts/script.js"></script>
+  <script src="./scripts/index.js" defer></script>
 
 </body>
 
