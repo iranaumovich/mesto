@@ -35,47 +35,59 @@
 
       <section>
         <ul class="places">
-          <li class="place">
-            <img class="place__image" src="./images/card-stonehenge.jpg" alt="Стоунхендж">
-            <div class="place__description">
-              <h2 class="place__title">Стоунхендж</h2>
-              <button type="button" class="place__like" aria-label="кнопка-лайк на фотографию"></button>
-            </div>
+          <li class="places__item">
+            <article class="place">
+              <img class="place__image" src="./images/card-stonehenge.jpg" alt="Стоунхендж">
+              <div class="place__description">
+                <h2 class="place__title">Стоунхендж</h2>
+                <button type="button" class="place__like-button" aria-label="кнопка-лайк на фотографию"></button>
+              </div>
+            </article>
           </li>
-          <li class="place">
-            <img class="place__image" src="./images/card-sphinx.jpg" alt="Пирамида Хеопса">
-            <div class="place__description">
-              <h2 class="place__title">Большой Сфинкс</h2>
-              <button type="button" class="place__like" aria-label="кнопка-лайк на фотографию"></button>
-            </div>
+          <li class="places__item">
+            <article class="place">
+              <img class="place__image" src="./images/card-sphinx.jpg" alt="Пирамида Хеопса">
+              <div class="place__description">
+                <h2 class="place__title">Большой Сфинкс</h2>
+                <button type="button" class="place__like-button" aria-label="кнопка-лайк на фотографию"></button>
+              </div>
+            </article>
           </li>
-          <li class="place">
-            <img class="place__image" src="./images/card-zeus.jpg" alt="Зевс в Олимпии">
-            <div class="place__description">
-              <h2 class="place__title">Зевс в Олимпии</h2>
-              <button type="button" class="place__like" aria-label="кнопка-лайк на фотографию"></button>
-            </div>
+          <li class="places__item">
+            <article class="place">
+              <img class="place__image" src="./images/card-zeus.jpg" alt="Зевс в Олимпии">
+              <div class="place__description">
+                <h2 class="place__title">Зевс в Олимпии</h2>
+                <button type="button" class="place__like-button" aria-label="кнопка-лайк на фотографию"></button>
+              </div>
+            </article>
           </li>
-          <li class="place">
-            <img class="place__image" src="./images/card-mausoleum.jpg" alt="Мавзолей в Галикарнасе">
-            <div class="place__description">
-              <h2 class="place__title">Мавзолей в Галикарнасе</h2>
-              <button type="button" class="place__like" aria-label="кнопка-лайк на фотографию"></button>
-            </div>
+          <li class="places__item">
+            <article class="place">
+              <img class="place__image" src="./images/card-mausoleum.jpg" alt="Мавзолей в Галикарнасе">
+              <div class="place__description">
+                <h2 class="place__title">Мавзолей в Галикарнасе</h2>
+                <button type="button" class="place__like-button" aria-label="кнопка-лайк на фотографию"></button>
+              </div>
+            </article>
           </li>
-          <li class="place">
-            <img class="place__image" src="./images/card-machu-picchu.jpg" alt="Мачу Пикчу">
-            <div class="place__description">
-              <h2 class="place__title">Мачу Пикчу</h2>
-              <button type="button" class="place__like" aria-label="кнопка-лайк на фотографию"></button>
-            </div>
+          <li class="places__item">
+            <article class="place">
+              <img class="place__image" src="./images/card-machu-picchu.jpg" alt="Мачу Пикчу">
+              <div class="place__description">
+                <h2 class="place__title">Мачу Пикчу</h2>
+                <button type="button" class="place__like-button" aria-label="кнопка-лайк на фотографию"></button>
+              </div>
+            </article>
           </li>
-          <li class="place">
-            <img class="place__image" src="./images/card-petra.jpg" alt="Петра">
-            <div class="place__description">
-              <h2 class="place__title">Петра</h2>
-              <button type="button" class="place__like" aria-label="кнопка-лайк на фотографию"></button>
-            </div>
+          <li class="places__item">
+            <article class="place">
+              <img class="place__image" src="./images/card-petra.jpg" alt="Петра">
+              <div class="place__description">
+                <h2 class="place__title">Петра</h2>
+                <button type="button" class="place__like-button" aria-label="кнопка-лайк на фотографию"></button>
+              </div>
+            </article>
           </li>
         </ul>
       </section>
@@ -88,7 +100,7 @@
     <div class="popup">
       <div class="popup__container">
         <h2 class="popup__heading">Редактировать профиль</h2>
-        <form class="form" name="EditProfilForm">
+        <form class="form" name="editProfilForm">
           <input type="text" class="form__item form__item_type_name" id="name" name="name" placeholder="Ваше имя">
           <input type="text" class="form__item form__item_type_description" id="about" name="about"
             placeholder="Пару слов о себе">
