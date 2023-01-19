@@ -1,7 +1,7 @@
 const editButton = document.querySelector('.profile__edit-button');
 const addButton = document.querySelector('.profile__add-button');
-const closeButton = document.querySelectorAll('.popup__close-button');
-const popUp = document.querySelectorAll('.popup');
+const closeButtons = document.querySelectorAll('.popup__close-button');
+const popUps = document.querySelectorAll('.popup');
 const userName = document.querySelector('.profile__title');
 const userDescription = document.querySelector('.profile__subtitle');
 const formElementTypeEdit = document.querySelector('.form_type_edit');
@@ -48,9 +48,17 @@ function openPopup(element) {
 }
 
 function closePopup() {
-  popUp.forEach(function (element) {
+  popUps.forEach(function (element) {
     element.classList.remove('popup_opened');
   })
+}
+
+function like(evt) {
+  evt.target.classList.toggle('place__like-button_active');
+};
+
+function remove(evt) {
+  evt.target.parentElement.style.display = "none";
 }
 
 function handleUserForm(evt) {
@@ -67,13 +75,15 @@ function addCard(card) {
   const placeImage = placeItem.querySelector('.place__image');
   const placeTitle = placeItem.querySelector('.place__title');
   placeTitle.textContent = card.name;
+  placeImage.alt = card.name;
   placeImage.src = card.link;
   placesItem.prepend(placeItem);
   likeButton.addEventListener('click', like);
-  trashButton.addEventListener('click', trash);
+  trashButton.addEventListener('click', remove);
   placeImage.addEventListener('click', function () {
     popapImage.src = placeImage.src;
-    popupImageSubtitle.textContent = placeImage.textContent;
+    popapImage.alt = placeImage.alt;
+    popupImageSubtitle.textContent = placeTitle.textContent;
     openPopup('.popup_type_image');
   });
 }
@@ -95,14 +105,6 @@ function handleCardForm(evt) {
   closePopup();
 }
 
-function like(evt) {
-  evt.target.classList.toggle('place__like-button_active');
-};
-
-function trash(evt) {
-  evt.target.parentElement.style.display = "none";
-}
-
 addInitialCards();
 
 formElementTypeEdit.addEventListener('submit', handleUserForm);
@@ -113,7 +115,7 @@ editButton.addEventListener('click', () => { openPopup('.popup_type_edit-form') 
 
 addButton.addEventListener('click', () => { openPopup('.popup_type_add-form') });
 
-closeButton.forEach((element) => { element.addEventListener('click', closePopup) });
+closeButtons.forEach((element) => { element.addEventListener('click', closePopup) });
 
 
 
