@@ -47,10 +47,13 @@
     <div class="popup popup_type_edit-form">
       <div class="popup__container">
         <h2 class="popup__heading">Редактировать профиль</h2>
-        <form class="form form_type_edit" name="editProfilForm">
-          <input type="text" class="form__item form__item_type_name" id="name" name="name" placeholder="Ваше имя">
-          <input type="text" class="form__item form__item_type_description" id="about" name="about"
-            placeholder="Пару слов о себе">
+        <form class="form form_type_edit" name="editProfilForm" novalidate>
+          <input type="text" class="form__item form__item_type_name" aria-describedby="name-input-error" id="name"
+            name="name" placeholder="Ваше имя" minlength="2" maxlength="40" required>
+          <span class="form__error" id="name-input-error"></span>
+          <input type="text" class="form__item form__item_type_description" aria-describedby="about-input-error"
+            id="about" name="about" placeholder="Пару слов о себе" minlength="2" maxlength="200" required>
+          <span class="form__error" id="about-input-error"></span>
           <button type="submit" class="form__button" aria-label="кнопка чтобы сохранить изменения">Сохранить</button>
         </form>
         <button type="button" class="popup__close-button"
@@ -61,11 +64,13 @@
     <div class="popup popup_type_add-form">
       <div class="popup__container">
         <h2 class="popup__heading">Новое место</h2>
-        <form class="form form_type_add" name="addPlaceItem">
-          <input type="text" class="form__item form__item_type_picture-title" id="picture-title" name="picture-title"
-            placeholder="Название" required>
-          <input type="text" class="form__item form__item_type_picture-link" id="picture-link" name="picture-link"
-            placeholder="Ссылка на картинку" required>
+        <form class="form form_type_add" name="addPlaceItem" novalidate>
+          <input type="text" class="form__item form__item_type_picture-title" aria-describedby="picture-title-error"
+            id="picture-title" name="picture-title" minlength="2" maxlength="30" placeholder="Название" required>
+          <span class="form__error" id="picture-title-error"></span>
+          <input type="url" class="form__item form__item_type_picture-link" aria-describedby="picture-link-error"
+            id="picture-link" name="picture-link" placeholder="Ссылка на картинку" required>
+          <span class="form__error" id="picture-link-error"></span>
           <button type="submit" class="form__button" aria-label="кнопка чтобы добавить картинку">Создать</button>
         </form>
         <button type="button" class="popup__close-button"
@@ -98,8 +103,8 @@
   </template>
 
   <script src="./scripts/cards.js" defer></script>
+  <script src="./scripts/valid.js" defer></script>
   <script src="./scripts/index.js" defer></script>
-
 </body>
 
 </html>

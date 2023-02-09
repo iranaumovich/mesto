@@ -11,7 +11,7 @@ const placeTemplate = document.querySelector('.template').content;
 const placesItem = document.querySelector('.places');
 const pictureTitle = document.querySelector('.form__item_type_picture-title');
 const pictureLink = document.querySelector('.form__item_type_picture-link');
-const popapImage = document.querySelector('.popup__image');
+const popupImage = document.querySelector('.popup__image');
 const popupImageSubtitle = document.querySelector('.popup__image-subtitle');
 const profilePopup = document.querySelector('.popup_type_edit-form');
 const cardPopup = document.querySelector('.popup_type_add-form');
@@ -21,19 +21,13 @@ function openPopup(element) {
   element.classList.add('popup_opened');
 }
 
-function openProfilePopup() {
-  nameInput.value = userName.textContent;
-  descriptionInput.value = userDescription.textContent;
-  openPopup(profilePopup);
-}
-
 function closePopup(element) {
   element.classList.remove('popup_opened');
 }
 
 function like(evt) {
   evt.target.classList.toggle('place__like-button_active');
-};
+}
 
 function remove(evt) {
   const placeItem = evt.target.closest('.places__item');
@@ -52,8 +46,8 @@ function createCard(card) {
   likeButton.addEventListener('click', like);
   trashButton.addEventListener('click', remove);
   placeImage.addEventListener('click', function () {
-    popapImage.src = card.link;
-    popapImage.alt = card.name;
+    popupImage.src = card.link;
+    popupImage.alt = card.name;
     popupImageSubtitle.textContent = card.name;
     openPopup(imagePopup);
   });
@@ -87,13 +81,24 @@ function handleCardForm(evt) {
   pictureLink.value = '';
 }
 
-addInitialCards();
+function init() {
+  nameInput.value = userName.textContent;
+  descriptionInput.value = userDescription.textContent;
+  addInitialCards();
+  enableValidation({
+    formSelector: '.form',
+    inputSelector: '.form__item',
+    submitButtonSelector: '.form__button',
+    inputErrorClass: 'form__item_type_error',
+    errorClass: 'form__error_visible'
+  });
+}
 
 formElementTypeEdit.addEventListener('submit', handleUserForm);
 
 formElementTypeAdd.addEventListener('submit', handleCardForm);
 
-editButton.addEventListener('click', openProfilePopup);
+editButton.addEventListener('click', function () { openPopup(profilePopup) });
 
 addButton.addEventListener('click', function () { openPopup(cardPopup) });
 
@@ -102,16 +107,4 @@ closeButtons.forEach(function (btn) {
   btn.addEventListener('click', () => closePopup(closestPopup));
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+init();

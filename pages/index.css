@@ -32,4 +32,7 @@
 @import url(../blocks/popup/__image/popup__image.css);
 @import url(../blocks/popup/__image-subtitle/popup__image-subtitle.css);
 @import url(../blocks/form/__item/form__item.css);
+@import url(../blocks/form/__item/_type/form__item_type_error.css);
 @import url(../blocks/form/__button/form__button.css);
+@import url(../blocks/form/__error/form__error.css);
+@import url(../blocks/form/__error/_visible/form__error_visible.css);
