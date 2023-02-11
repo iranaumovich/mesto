@@ -17,7 +17,8 @@ const profilePopup = document.querySelector('.popup_type_edit-form');
 const cardPopup = document.querySelector('.popup_type_add-form');
 const imagePopup = document.querySelector('.popup_type_image');
 const popUps = document.querySelectorAll('.popup');
-const popupContainer = document.querySelector('.popup__container');
+const popupContainers = document.querySelectorAll('.popup__container');
+
 const popupImageContainer = document.querySelector('.popup__image-container');
 
 function openPopup(element) {
@@ -112,7 +113,11 @@ closeButtons.forEach(function (btn) {
 
 popUps.forEach(function (popupElement) {
   popupElement.addEventListener('click', function (evt) {
-    if (evt.target !== popupContainer && evt.target !== popupImageContainer) {
+    const popupContainer = Array.from(popupContainers).some(function (element) {
+      return element.contains(evt.target);
+    });
+
+    if (!popupContainer && !popupImageContainer.contains(evt.target)) {
       closePopup(popupElement);
     }
   });
