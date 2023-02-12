@@ -34,10 +34,14 @@ function toggleButtonState(inputList, formButton) {
   }
 }
 
+function disableSubmitButton(submitButton) {
+  submitButton.setAttribute('disabled', true);
+}
+
 function setInputsHandler(formElement, config) {
   const inputList = Array.from(formElement.querySelectorAll(config.inputSelector));
   const formButton = formElement.querySelector(config.submitButtonSelector);
-  toggleButtonState(inputList, formButton);
+
   inputList.forEach(function (inputElement) {
     inputElement.addEventListener('input', function () {
       isValid(formElement, inputElement, config);
