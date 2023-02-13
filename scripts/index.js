@@ -24,9 +24,7 @@ const popupImageContainer = document.querySelector('.popup__image-container');
 function openPopup(element) {
   element.classList.add('popup_opened');
 
-  document.addEventListener('keydown', function (evt) {
-    closePopupByEsc(evt, element);
-  });
+  document.addEventListener('keydown', closePopupByEsc);
 }
 
 function openProfilePopup() {
@@ -138,12 +136,11 @@ popUps.forEach(function (popupElement) {
   });
 });
 
-function closePopupByEsc(evt, popupElement) {
-  if (evt.key !== 'Escape') {
-    return;
+function closePopupByEsc(evt) {
+  const popupElement = document.querySelector('.popup_opened');
+  if (evt.key === 'Escape' && popupElement) {
+    closePopup(popupElement);
   }
-
-  closePopup(popupElement);
 }
 
 
