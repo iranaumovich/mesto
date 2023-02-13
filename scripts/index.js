@@ -137,8 +137,8 @@ popUps.forEach(function (popupElement) {
 });
 
 function closePopupByEsc(evt) {
-  const popupElement = document.querySelector('.popup_opened');
-  if (evt.key === 'Escape' && popupElement) {
+  if (evt.key === 'Escape') {
+    const popupElement = document.querySelector('.popup_opened');
     closePopup(popupElement);
   }
 }
