@@ -1,12 +1,12 @@
 export class Card {
 
-  constructor(cardData, templateSelector) {
+  constructor(cardData, templateSelector, popup) {
     this._name = cardData.name;
     this._link = cardData.link;
     this._templateSelector = templateSelector;
-    this._popup = document.querySelector('.popup_type_image');
-    this._popupImage = this._popup.querySelector('.popup__image');
-    this._popupSubtitle = this._popup.querySelector('.popup__image-subtitle');
+    this._template = this._getTemplate();
+    this._placeImage = this._template.querySelector('.place__image');
+    this._popup = popup;
   }
 
   _getTemplate() {
@@ -27,26 +27,27 @@ export class Card {
     placeItem.remove();
   }
 
-  createCard(openPopup) {
-    const template = this._getTemplate();
-    const placeImage = template.querySelector('.place__image');
-    const placeTitle = template.querySelector('.place__title');
-    placeTitle.textContent = this._name;
-    placeImage.alt = this._name;
-    placeImage.src = this._link;
-
-    const likeButton = template.querySelector('.place__like-button');
-    const trashButton = template.querySelector('.places__trash-button');
-
+  _setEventListeners() {
+    const likeButton = this._template.querySelector('.place__like-button');
+    const trashButton = this._template.querySelector('.places__trash-button');
     likeButton.addEventListener('click', this._like);
     trashButton.addEventListener('click', this._remove);
-    placeImage.addEventListener('click', () => {
-      this._popupImage.src = this._link;
-      this._popupImage.alt = this._name;
-      this._popupSubtitle.textContent = this._name;
-      openPopup(this._popup);
+    this._placeImage.addEventListener('click', () => {
+      this._popup.imageElement.src = this._link;
+      this._popup.imageElement.alt = this._name;
+      this._popup.subtitleElement.textContent = this._name;
+      this._popup.open();
     });
+  }
 
-    return template;
+  createCard() {
+    const placeTitle = this._template.querySelector('.place__title');
+    placeTitle.textContent = this._name;
+    this._placeImage.alt = this._name;
+    this._placeImage.src = this._link;
+
+    this._setEventListeners();
+
+    return this._template;
   }
 }

@@ -1,6 +1,6 @@
 import { initialCards } from './cards.js';
 import { Card } from './card.js';
-import { FormValidator } from './valid.js';
+import { FormValidator } from './formValidator.js';
 
 const editButton = document.querySelector('.profile__edit-button');
 const addButton = document.querySelector('.profile__add-button');
@@ -19,7 +19,15 @@ const cardPopup = document.querySelector('.popup_type_add-form');
 const popUps = document.querySelectorAll('.popup');
 const popupContainers = document.querySelectorAll('.popup__container');
 const popupImageContainer = document.querySelector('.popup__image-container');
+const popupTypeImage = document.querySelector('.popup_type_image');
+const popupImage = popupTypeImage.querySelector('.popup__image');
+const popupSubtitle = popupTypeImage.querySelector('.popup__image-subtitle');
 
+const popupObject = {
+  imageElement: popupImage,
+  subtitleElement: popupSubtitle,
+  open: () => openPopup(popupTypeImage)
+}
 
 function openPopup(element) {
   element.classList.add('popup_opened');
@@ -35,6 +43,7 @@ function openProfilePopup() {
 function closePopup(element) {
   element.classList.remove('popup_opened');
   element.removeEventListener('keydown', closePopupByEsc);
+  element.querySelector('.form').reset();
 }
 
 function closePopupByEsc(evt) {
@@ -45,7 +54,7 @@ function closePopupByEsc(evt) {
 }
 
 function renderCard(card) {
-  const newCard = new Card(card, '.template');
+  const newCard = new Card(card, '.template', popupObject);
   const node = newCard.createCard(openPopup);
   placesItem.prepend(node);
 }
@@ -68,13 +77,10 @@ function handleCardForm(evt) {
   const newCard = { name: pictureTitle.value, link: pictureLink.value }
   renderCard(newCard);
   closePopup(cardPopup);
-  pictureTitle.value = '';
-  pictureLink.value = '';
+  evt.target.reset();
 }
 
 function init() {
-  nameInput.value = userName.textContent;
-  descriptionInput.value = userDescription.textContent;
   addInitialCards();
 
   const formList = Array.from(document.querySelectorAll('.form'));
@@ -96,7 +102,6 @@ formElementTypeAdd.addEventListener('submit', handleCardForm);
 editButton.addEventListener('click', openProfilePopup);
 
 addButton.addEventListener('click', function () {
-  const formButton = cardPopup.querySelector('.form__button');
   openPopup(cardPopup);
 });
 
