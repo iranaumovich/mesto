@@ -1,7 +1,3 @@
-import { initialCards } from './cards.js';
-import { Card } from './card.js';
-import { FormValidator } from './valid.js';
-
 const editButton = document.querySelector('.profile__edit-button');
 const addButton = document.querySelector('.profile__add-button');
 const closeButtons = document.querySelectorAll('.popup__close-button');
@@ -15,6 +11,8 @@ const placeTemplate = document.querySelector('.template').content;
 const placesItem = document.querySelector('.places');
 const pictureTitle = document.querySelector('.form__item_type_picture-title');
 const pictureLink = document.querySelector('.form__item_type_picture-link');
+const popupImage = document.querySelector('.popup__image');
+const popupImageSubtitle = document.querySelector('.popup__image-subtitle');
 const profilePopup = document.querySelector('.popup_type_edit-form');
 const cardPopup = document.querySelector('.popup_type_add-form');
 const imagePopup = document.querySelector('.popup_type_image');
@@ -25,6 +23,7 @@ const popupImageContainer = document.querySelector('.popup__image-container');
 
 function openPopup(element) {
   element.classList.add('popup_opened');
+
   document.addEventListener('keydown', closePopupByEsc);
 }
 
@@ -39,16 +38,37 @@ function closePopup(element) {
   element.removeEventListener('keydown', closePopupByEsc);
 }
 
-function closePopupByEsc(evt) {
-  if (evt.key === 'Escape') {
-    const popupElement = document.querySelector('.popup_opened');
-    closePopup(popupElement);
-  }
+function like(evt) {
+  evt.target.classList.toggle('place__like-button_active');
+}
+
+function remove(evt) {
+  const placeItem = evt.target.closest('.places__item');
+  placeItem.remove();
+}
+
+function createCard(card) {
+  const placeItem = placeTemplate.querySelector('.places__item').cloneNode(true);
+  const likeButton = placeItem.querySelector('.place__like-button');
+  const trashButton = placeItem.querySelector('.places__trash-button');
+  const placeImage = placeItem.querySelector('.place__image');
+  const placeTitle = placeItem.querySelector('.place__title');
+  placeTitle.textContent = card.name;
+  placeImage.alt = card.name;
+  placeImage.src = card.link;
+  likeButton.addEventListener('click', like);
+  trashButton.addEventListener('click', remove);
+  placeImage.addEventListener('click', function () {
+    popupImage.src = card.link;
+    popupImage.alt = card.name;
+    popupImageSubtitle.textContent = card.name;
+    openPopup(imagePopup);
+  });
+  return placeItem;
 }
 
 function renderCard(card) {
-  const newCard = new Card(card, '.template');
-  const node = newCard.createCard(openPopup);
+  const node = createCard(card);
   placesItem.prepend(node);
 }
 
@@ -78,16 +98,12 @@ function init() {
   nameInput.value = userName.textContent;
   descriptionInput.value = userDescription.textContent;
   addInitialCards();
-
-  const formList = Array.from(document.querySelectorAll('.form'));
-  formList.forEach(function (formElement) {
-    const formValidator = new FormValidator({
-      inputSelector: '.form__item',
-      submitButtonSelector: '.form__button',
-      inputErrorClass: 'form__item_type_error',
-      errorClass: 'form__error_visible'
-    }, formElement);
-    formValidator.enableValidation();
+  enableValidation({
+    formSelector: '.form',
+    inputSelector: '.form__item',
+    submitButtonSelector: '.form__button',
+    inputErrorClass: 'form__item_type_error',
+    errorClass: 'form__error_visible'
   });
 }
 
@@ -99,8 +115,13 @@ editButton.addEventListener('click', openProfilePopup);
 
 addButton.addEventListener('click', function () {
   const formButton = cardPopup.querySelector('.form__button');
-  openPopup(cardPopup);
+  disableSubmitButton(formButton);
+  openPopup(cardPopup)
 });
+
+function disableSubmitButton(submitButton) {
+  submitButton.setAttribute('disabled', true);
+}
 
 closeButtons.forEach(function (btn) {
   const closestPopup = btn.closest('.popup');
@@ -118,5 +139,13 @@ popUps.forEach(function (popupElement) {
     }
   });
 });
+
+function closePopupByEsc(evt) {
+  if (evt.key === 'Escape') {
+    const popupElement = document.querySelector('.popup_opened');
+    closePopup(popupElement);
+  }
+}
+
 
 init();

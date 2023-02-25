@@ -1,60 +1,69 @@
-function showInputError(formElement, inputElement, errorMessage, config) {
-  const errorElement = formElement.querySelector(`#${inputElement.getAttribute('aria-describedby')}`);
-  inputElement.classList.add(config.inputErrorClass);
-  errorElement.textContent = errorMessage;
-  errorElement.classList.add(config.errorClass);
-}
-
-function hideInputError(formElement, inputElement, config) {
-  const errorElement = formElement.querySelector(`#${inputElement.getAttribute('aria-describedby')}`);
-  inputElement.classList.remove(config.inputErrorClass);
-  errorElement.textContent = '';
-  errorElement.classList.remove(config.errorClass);
-}
-
-function isValid(formElement, inputElement, config) {
-  if (!inputElement.validity.valid) {
-    showInputError(formElement, inputElement, inputElement.validationMessage, config);
-  } else {
-    hideInputError(formElement, inputElement, config);
+export class FormValidator {
+  constructor(formData, formElement) {
+    this._inputSelector = formData.inputSelector;
+    this._submitButtonSelector = formData.submitButtonSelector;
+    this._inputErrorClass = formData.inputErrorClass;
+    this._errorClass = formData.errorClass;
+    this._formElement = formElement;
   }
-}
 
-function hasInvalidInput(inputList) {
-  return inputList.some(function (inputElement) {
-    return !inputElement.validity.valid;
-  });
-}
-
-function toggleButtonState(inputList, formButton) {
-  if (hasInvalidInput(inputList)) {
-    formButton.setAttribute('disabled', true);
-  } else {
-    formButton.removeAttribute('disabled');
+  _showInputError(inputElement, errorMessage) {
+    const errorElement = this._formElement.querySelector(`#${inputElement.getAttribute('aria-describedby')}`);
+    inputElement.classList.add(this._inputErrorClass);
+    errorElement.textContent = errorMessage;
+    errorElement.classList.add(this._errorClass);
   }
-}
 
-function disableSubmitButton(submitButton) {
-  submitButton.setAttribute('disabled', true);
-}
+  _hideInputError(inputElement) {
+    const errorElement = this._formElement.querySelector(`#${inputElement.getAttribute('aria-describedby')}`);
+    inputElement.classList.remove(this._inputErrorClass);
+    errorElement.textContent = '';
+    errorElement.classList.remove(this._errorClass);
+  }
 
-function setInputsHandler(formElement, config) {
-  const inputList = Array.from(formElement.querySelectorAll(config.inputSelector));
-  const formButton = formElement.querySelector(config.submitButtonSelector);
-
-  inputList.forEach(function (inputElement) {
-    inputElement.addEventListener('input', function () {
-      isValid(formElement, inputElement, config);
-      toggleButtonState(inputList, formButton);
+  _hasInvalidInput(inputList) {
+    return inputList.some(function (inputElement) {
+      return !inputElement.validity.valid;
     });
-  });
+  }
+
+  _toggleButtonState(inputList, formButton) {
+    if (this._hasInvalidInput(inputList)) {
+      formButton.setAttribute('disabled', true);
+    } else {
+      formButton.removeAttribute('disabled');
+    }
+  }
+
+  _isValid(inputElement) {
+    if (!inputElement.validity.valid) {
+      this._showInputError(inputElement, inputElement.validationMessage);
+    } else {
+      this._hideInputError(inputElement);
+    }
+  }
+
+  _setInputsHandler() {
+    const inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
+    const formButton = this._formElement.querySelector(this._submitButtonSelector);
+
+    inputList.forEach((inputElement) => {
+      inputElement.addEventListener('input', () => {
+        this._isValid(inputElement);
+        this._toggleButtonState(inputList, formButton);
+      });
+    });
+
+    this._formElement.addEventListener('submit', (evt) => {
+      evt.preventDefault();
+      this._toggleButtonState(inputList, formButton);
+    })
+
+    this._toggleButtonState(inputList, formButton);
+  }
+
+  enableValidation() {
+    this._setInputsHandler();
+  }
+
 }
-
-function enableValidation(config) {
-  const formList = Array.from(document.querySelectorAll(config.formSelector));
-  formList.forEach(function (formElement) {
-    setInputsHandler(formElement, config);
-  });
-}
-
-
