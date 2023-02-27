@@ -43,7 +43,6 @@ function openProfilePopup() {
 function closePopup(element) {
   element.classList.remove('popup_opened');
   element.removeEventListener('keydown', closePopupByEsc);
-  element.querySelector('.form').reset();
 }
 
 function closePopupByEsc(evt) {
@@ -102,6 +101,7 @@ formElementTypeAdd.addEventListener('submit', handleCardForm);
 editButton.addEventListener('click', openProfilePopup);
 
 addButton.addEventListener('click', function () {
+  formElementTypeAdd.reset();
   openPopup(cardPopup);
 });
 
