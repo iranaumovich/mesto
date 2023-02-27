@@ -20,11 +20,11 @@ const popUps = document.querySelectorAll('.popup');
 const popupContainers = document.querySelectorAll('.popup__container');
 const popupImageContainer = document.querySelector('.popup__image-container');
 const popupTypeImage = document.querySelector('.popup_type_image');
-const popupImage = popupTypeImage.querySelector('.popup__image');
+const popupImageElement = popupTypeImage.querySelector('.popup__image');
 const popupSubtitle = popupTypeImage.querySelector('.popup__image-subtitle');
 
-const popupObject = {
-  imageElement: popupImage,
+const popupImage = {
+  imageElement: popupImageElement,
   subtitleElement: popupSubtitle,
   open: () => openPopup(popupTypeImage)
 }
@@ -54,7 +54,7 @@ function closePopupByEsc(evt) {
 }
 
 function renderCard(card) {
-  const newCard = new Card(card, '.template', popupObject);
+  const newCard = new Card(card, '.template', popupImage);
   const node = newCard.createCard(openPopup);
   placesItem.prepend(node);
 }
