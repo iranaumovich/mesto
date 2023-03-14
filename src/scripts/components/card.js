@@ -1,19 +1,17 @@
-export class Card {
-
-  constructor(cardData, templateSelector, popup) {
+export default class Card {
+  constructor(cardData, templateSelector, handleCardClick) {
     this._name = cardData.name;
     this._link = cardData.link;
     this._templateSelector = templateSelector;
     this._template = this._getTemplate();
     this._placeImage = this._template.querySelector('.place__image');
-    this._popup = popup;
+    this._handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
     const templateElement = document
       .querySelector(this._templateSelector)
-      .content
-      .querySelector('.places__item')
+      .content.querySelector('.places__item')
       .cloneNode(true);
     return templateElement;
   }
@@ -32,12 +30,7 @@ export class Card {
     const trashButton = this._template.querySelector('.places__trash-button');
     likeButton.addEventListener('click', this._like);
     trashButton.addEventListener('click', this._remove);
-    this._placeImage.addEventListener('click', () => {
-      this._popup.imageElement.src = this._link;
-      this._popup.imageElement.alt = this._name;
-      this._popup.subtitleElement.textContent = this._name;
-      this._popup.open();
-    });
+    this._placeImage.addEventListener('click', this._handleCardClick);
   }
 
   createCard() {

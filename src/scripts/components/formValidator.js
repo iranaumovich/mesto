@@ -1,23 +1,31 @@
-export class FormValidator {
+export default class FormValidator {
   constructor(formData, formElement) {
     this._inputSelector = formData.inputSelector;
     this._submitButtonSelector = formData.submitButtonSelector;
     this._inputErrorClass = formData.inputErrorClass;
     this._errorClass = formData.errorClass;
     this._formElement = formElement;
-    this._inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
-    this._formButton = this._formElement.querySelector(this._submitButtonSelector);
+    this._inputList = Array.from(
+      this._formElement.querySelectorAll(this._inputSelector),
+    );
+    this._formButton = this._formElement.querySelector(
+      this._submitButtonSelector,
+    );
   }
 
   _showInputError(inputElement, errorMessage) {
-    const errorElement = this._formElement.querySelector(`#${inputElement.getAttribute('aria-describedby')}`);
+    const errorElement = this._formElement.querySelector(
+      `#${inputElement.getAttribute('aria-describedby')}`,
+    );
     inputElement.classList.add(this._inputErrorClass);
     errorElement.textContent = errorMessage;
     errorElement.classList.add(this._errorClass);
   }
 
   _hideInputError(inputElement) {
-    const errorElement = this._formElement.querySelector(`#${inputElement.getAttribute('aria-describedby')}`);
+    const errorElement = this._formElement.querySelector(
+      `#${inputElement.getAttribute('aria-describedby')}`,
+    );
     inputElement.classList.remove(this._inputErrorClass);
     errorElement.textContent = '';
     errorElement.classList.remove(this._errorClass);
@@ -67,7 +75,7 @@ export class FormValidator {
 
     this._formElement.addEventListener('reset', () => {
       this._inputList.forEach((inputElement) => {
-        this._hideInputError(inputElement)
+        this._hideInputError(inputElement);
       });
       this._disableSubmitButton();
     });
