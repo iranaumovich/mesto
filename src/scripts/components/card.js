@@ -3,8 +3,8 @@ export default class Card {
     this._name = cardData.name;
     this._link = cardData.link;
     this._templateSelector = templateSelector;
-    this._template = this._getTemplate();
-    this._placeImage = this._template.querySelector('.place__image');
+    this._cardElement = this._getTemplate();
+    this._placeImage = this._cardElement.querySelector('.place__image');
     this._handleCardClick = handleCardClick;
   }
 
@@ -20,27 +20,35 @@ export default class Card {
     evt.target.classList.toggle('place__like-button_active');
   }
 
-  _remove(evt) {
-    const placeItem = evt.target.closest('.places__item');
-    placeItem.remove();
+  _remove() {
+    this._cardElement.remove();
   }
 
   _setEventListeners() {
-    const likeButton = this._template.querySelector('.place__like-button');
-    const trashButton = this._template.querySelector('.places__trash-button');
+    const likeButton = this._cardElement.querySelector('.place__like-button');
+    const trashButton = this._cardElement.querySelector(
+      '.places__trash-button',
+    );
     likeButton.addEventListener('click', this._like);
-    trashButton.addEventListener('click', this._remove);
-    this._placeImage.addEventListener('click', this._handleCardClick);
+    trashButton.addEventListener('click', this._remove.bind(this));
+    this._placeImage.addEventListener('click', () =>
+      this._handleCardClick(this._link, this._name),
+    );
   }
 
   createCard() {
-    const placeTitle = this._template.querySelector('.place__title');
+    const placeTitle = this._cardElement.querySelector('.place__title');
     placeTitle.textContent = this._name;
     this._placeImage.alt = this._name;
     this._placeImage.src = this._link;
 
     this._setEventListeners();
 
-    return this._template;
+    return this._cardElement;
+  }
+
+  renderCard(addItem) {
+    const card = this.createCard();
+    addItem(card);
   }
 }
