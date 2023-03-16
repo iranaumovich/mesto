@@ -21,14 +21,9 @@ const profileInfo = new UserInfo({
 const profileEditPopup = new PopupWithForm(
   '.popup_type_edit-form',
   handleUserForm,
-  createValidator,
 );
 
-const cardAddPopup = new PopupWithForm(
-  '.popup_type_add-form',
-  handleCardForm,
-  createValidator,
-);
+const cardAddPopup = new PopupWithForm('.popup_type_add-form', handleCardForm);
 
 const imagePopup = new PopupWithImage('.popup_type_image');
 imagePopup.setEventListeners();
@@ -36,15 +31,18 @@ imagePopup.setEventListeners();
 const cardList = new Section(
   {
     items: initialCards,
-    renderer: (cardItem) => {
-      const card = new Card(cardItem, '.template', (link, name) =>
-        imagePopup.open(link, name),
-      );
-      card.renderCard(cardList.addItem);
-    },
+    renderer: renderCard,
   },
   '.places',
 );
+
+function renderCard(cardItem) {
+  const newCard = new Card(cardItem, '.template', (link, name) =>
+    imagePopup.open(link, name),
+  );
+  const newCardCreate = newCard.createCard();
+  cardList.addItem(newCardCreate);
+}
 
 function handleUserForm(inputValues) {
   profileInfo.setUserInfo(inputValues.name, inputValues.about);
@@ -55,24 +53,31 @@ function handleCardForm(inputValues) {
     name: inputValues['picture-title'],
     link: inputValues['picture-link'],
   };
-  const newCard = new Card(cardData, '.template', (link, name) =>
-    imagePopup.open(link, name),
-  );
-  newCard.renderCard(cardList.addItem);
+  renderCard(cardData);
 }
 
-function createValidator(formElement) {
-  const validator = new FormValidator(
-    {
-      inputSelector: '.form__item',
-      submitButtonSelector: '.form__button',
-      inputErrorClass: 'form__item_type_error',
-      errorClass: 'form__error_visible',
-    },
-    formElement,
-  );
-  validator.enableValidation();
-}
+const profileEditPopupValidator = new FormValidator(
+  {
+    inputSelector: '.form__item',
+    submitButtonSelector: '.form__button',
+    inputErrorClass: 'form__item_type_error',
+    errorClass: 'form__error_visible',
+  },
+  profileEditPopup.getFormElement(),
+);
+
+const cardAddPopupValidator = new FormValidator(
+  {
+    inputSelector: '.form__item',
+    submitButtonSelector: '.form__button',
+    inputErrorClass: 'form__item_type_error',
+    errorClass: 'form__error_visible',
+  },
+  cardAddPopup.getFormElement(),
+);
+
+profileEditPopupValidator.enableValidation();
+cardAddPopupValidator.enableValidation();
 
 editButton.addEventListener('click', function () {
   const userInfo = profileInfo.getUserInfo();

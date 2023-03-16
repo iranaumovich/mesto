@@ -46,9 +46,4 @@ export default class Card {
 
     return this._cardElement;
   }
-
-  renderCard(addItem) {
-    const card = this.createCard();
-    addItem(card);
-  }
 }
