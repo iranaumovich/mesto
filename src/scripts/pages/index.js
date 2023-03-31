@@ -25,7 +25,7 @@ api.getInitialCards().then((data) => {
   cardList.renderItems(data);
 });
 
-api.getUserInfo().then((data) => {
+api.getUserInfoFromServer().then((data) => {
   profileInfo.setUserInfo(data.name, data.about, data.avatar);
 });
 
@@ -56,7 +56,9 @@ function renderCard(cardItem) {
 }
 
 function handleUserForm(inputValues) {
-  profileInfo.setUserInfo(inputValues.name, inputValues.about);
+  api.editUserInfo(inputValues.name, inputValues.about).then((data) => {
+    profileInfo.setUserInfo(data.name, data.about);
+  });
 }
 
 function handleCardForm(inputValues) {

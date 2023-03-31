@@ -3,7 +3,7 @@ export default class Api {
     (this._baseUrl = options.baseUrl), (this._headers = options.headers);
   }
 
-  getUserInfo() {
+  getUserInfoFromServer() {
     return fetch(`${this._baseUrl}/users/me `, {
       headers: this._headers,
     }).then((res) => {
@@ -22,11 +22,23 @@ export default class Api {
       if (res.ok) {
         return res.json();
       }
-
-      // если ошибка, отклоняем промис
       return Promise.reject(`Ошибка: ${res.status}`);
     });
   }
 
-  // другие методы работы с API
+  editUserInfo(newName, newDescription) {
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        name: newName,
+        about: newDescription,
+      }),
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка: ${res.status}`);
+    });
+  }
 }
