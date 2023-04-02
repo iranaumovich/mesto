@@ -8,7 +8,7 @@ import {
 import Card from '../components/card.js';
 import PopupWithImage from '../components/popupWithImage.js';
 import PopupWithForm from '../components/popupWithForm.js';
-import PopupConfirmDelete from '../components/popupWithForm.js';
+import PopupConfirmDelete from '../components/popupConfirmDelete.js';
 import Section from '../components/section.js';
 import UserInfo from '../components/userInfo.js';
 import FormValidator from '../components/formValidator.js';

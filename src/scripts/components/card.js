@@ -21,6 +21,9 @@ export default class Card {
     this._handleDeleteLike = handleDeleteLike;
     this._like = this._like.bind(this);
     this._deletePopup = deletePopup;
+    this._trashButton = this._cardElement.querySelector(
+      '.places__trash-button',
+    );
   }
 
   _getTemplate() {
@@ -41,7 +44,7 @@ export default class Card {
       });
     } else {
       this._handleDeleteLike().then((data) => {
-        placeLikeCounter.textContent = data.likes.length - 1;
+        placeLikeCounter.textContent = data.likes.length;
         evt.target.classList.remove('place__like-button_active');
         this.hasLike = false;
       });
@@ -52,19 +55,12 @@ export default class Card {
     this._cardElement.remove();
   }
 
-  /* _remove() {
-    this._cardElement.remove();
-  } */
-
   _setEventListeners() {
     const likeButton = this._cardElement.querySelector('.place__like-button');
-    const trashButton = this._cardElement.querySelector(
-      '.places__trash-button',
-    );
+
     likeButton.addEventListener('click', this._like);
-    /* trashButton.addEventListener('click', this._remove.bind(this)); */
-    trashButton.addEventListener('click', () =>
-      this._deletePopup.open(this._cardElement, this._cardId),
+    this._trashButton.addEventListener('click', () =>
+      this._deletePopup.open(this, this._cardId),
     );
     this._placeImage.addEventListener('click', () =>
       this._handleCardClick(this._link, this._name),
