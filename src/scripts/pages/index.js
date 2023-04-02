@@ -4,6 +4,7 @@ import {
   descriptionInput,
   editButton,
   addButton,
+  avatarItem,
 } from '../utils/constants.js';
 import Card from '../components/card.js';
 import PopupWithImage from '../components/popupWithImage.js';
@@ -45,23 +46,23 @@ const cardAddPopup = new PopupWithForm('.popup_type_add-form', handleCardForm);
 
 const imagePopup = new PopupWithImage('.popup_type_image');
 
+const avatarPopup = new PopupWithForm('.popup_type_avatar', handleAvatarForm);
+
 const cardList = new Section(renderCard, '.places');
 
 function renderCard(cardItem) {
-  const hasLike = cardItem.likes
-    .map((like) => like._id)
-    .includes(profileInfo.getId());
+  const ownerId = profileInfo.getId();
   const handleSetLike = () => api.setLike(cardItem._id);
   const handleDeleteLike = () => api.deleteLike(cardItem._id);
 
   const newCard = new Card(
     cardItem,
     '.template',
-    hasLike,
     (link, name) => imagePopup.open(link, name),
     handleSetLike,
     handleDeleteLike,
     cardDeletePopup,
+    ownerId,
   );
   const newCardCreate = newCard.createCard();
   cardList.addItem(newCardCreate);
@@ -83,6 +84,8 @@ function handleCardForm(inputValues) {
   });
 }
 
+function handleAvatarForm(inputValues) {}
+
 const profileEditPopupValidator = new FormValidator(
   {
     inputSelector: '.form__item',
@@ -103,8 +106,19 @@ const cardAddPopupValidator = new FormValidator(
   cardAddPopup.getFormElement(),
 );
 
+const avatarPopupValidator = new FormValidator(
+  {
+    inputSelector: '.form__item',
+    submitButtonSelector: '.form__button',
+    inputErrorClass: 'form__item_type_error',
+    errorClass: 'form__error_visible',
+  },
+  avatarPopup.getFormElement(),
+);
+
 profileEditPopupValidator.enableValidation();
 cardAddPopupValidator.enableValidation();
+avatarPopupValidator.enableValidation();
 
 editButton.addEventListener('click', function () {
   const userInfo = profileInfo.getUserInfo();
@@ -115,11 +129,15 @@ editButton.addEventListener('click', function () {
 
 addButton.addEventListener('click', () => cardAddPopup.open());
 
+avatarItem.addEventListener('click', () => console.log('hello'));
+
 profileEditPopup.setEventListeners();
 
 cardAddPopup.setEventListeners();
 
 imagePopup.setEventListeners();
+
+avatarPopup.setEventListeners();
 
 const cardDeletePopup = new PopupConfirmDelete(
   '.popup_type_delete',
