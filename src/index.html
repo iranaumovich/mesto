@@ -86,6 +86,18 @@
       </div>
     </div>
 
+    <div class="popup popup_type_delete">
+      <div class="popup__container">
+        <h2 class="popup__heading popup__heading_type_confirm">Вы уверены?</h2>
+        <form class="form">
+          <button type="button" class="form__button"
+          aria-label="кнопка чтобы подтвердить удаление картинки">Да</button>
+        </form>
+        <button type="button" class="popup__close-button"
+          aria-label="кнопка чтобы закрыть окно удаления картинок"></button>
+      </div>
+    </div>
+
   </div>
 
   <template class="template">
@@ -95,7 +107,7 @@
         <img class="place__image" src="#" alt>
         <div class="place__description">
           <h2 class="place__title"></h2>
-          <button type="button" class="place__like-button" aria-label="кнопка-лайк на фотографию"></button>
+          <button type="button" class="place__like-button" aria-label="кнопка-лайк на фотографию"><span class="place__like-counter">0</span></button>
         </div>
       </article>
     </li>

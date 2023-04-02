@@ -8,6 +8,7 @@ import {
 import Card from '../components/card.js';
 import PopupWithImage from '../components/popupWithImage.js';
 import PopupWithForm from '../components/popupWithForm.js';
+import PopupConfirmDelete from '../components/popupWithForm.js';
 import Section from '../components/section.js';
 import UserInfo from '../components/userInfo.js';
 import FormValidator from '../components/formValidator.js';
@@ -26,7 +27,7 @@ api.getInitialCards().then((data) => {
 });
 
 api.getUserInfoFromServer().then((data) => {
-  profileInfo.setUserInfo(data.name, data.about, data.avatar);
+  profileInfo.setUserInfo(data.name, data.about, data.avatar, data._id);
 });
 
 const profileInfo = new UserInfo({
@@ -43,13 +44,24 @@ const profileEditPopup = new PopupWithForm(
 const cardAddPopup = new PopupWithForm('.popup_type_add-form', handleCardForm);
 
 const imagePopup = new PopupWithImage('.popup_type_image');
-imagePopup.setEventListeners();
 
 const cardList = new Section(renderCard, '.places');
 
 function renderCard(cardItem) {
-  const newCard = new Card(cardItem, '.template', (link, name) =>
-    imagePopup.open(link, name),
+  const hasLike = cardItem.likes
+    .map((like) => like._id)
+    .includes(profileInfo.getId());
+  const handleSetLike = () => api.setLike(cardItem._id);
+  const handleDeleteLike = () => api.deleteLike(cardItem._id);
+
+  const newCard = new Card(
+    cardItem,
+    '.template',
+    hasLike,
+    (link, name) => imagePopup.open(link, name),
+    handleSetLike,
+    handleDeleteLike,
+    cardDeletePopup,
   );
   const newCardCreate = newCard.createCard();
   cardList.addItem(newCardCreate);
@@ -66,7 +78,9 @@ function handleCardForm(inputValues) {
     name: inputValues['picture-title'],
     link: inputValues['picture-link'],
   };
-  renderCard(cardData);
+  api.addNewCard(cardData.name, cardData.link).then((data) => {
+    renderCard(data);
+  });
 }
 
 const profileEditPopupValidator = new FormValidator(
@@ -104,3 +118,18 @@ addButton.addEventListener('click', () => cardAddPopup.open());
 profileEditPopup.setEventListeners();
 
 cardAddPopup.setEventListeners();
+
+imagePopup.setEventListeners();
+
+const cardDeletePopup = new PopupConfirmDelete(
+  '.popup_type_delete',
+  handleConfirmation,
+);
+
+function handleConfirmation(card, cardId) {
+  api.deleteCard(cardId).then(() => {
+    card.deleteCard();
+  });
+}
+
+cardDeletePopup.setEventListeners();
