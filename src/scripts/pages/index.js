@@ -23,13 +23,19 @@ const api = new Api({
   },
 });
 
-api.getInitialCards().then((data) => {
-  cardList.renderItems(data);
-});
-
-api.getUserInfoFromServer().then((data) => {
-  profileInfo.setUserInfo(data.name, data.about, data.avatar, data._id);
-});
+Promise.all([api.getUserInfoFromServer(), api.getInitialCards()])
+  .then(([userData, cards]) => {
+    profileInfo.setUserInfo(
+      userData.name,
+      userData.about,
+      userData.avatar,
+      userData._id,
+    );
+    cardList.renderItems(cards);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 const cardList = new Section(renderCard, '.places');
 
@@ -104,15 +110,13 @@ function renderCard(cardItem) {
 }
 
 function handleUserForm(inputValues) {
-  profileEditPopup.changeButtonText('Сохранение...');
-  api
+  return api
     .editUserInfo(inputValues.name, inputValues.about)
     .then((data) => {
       profileInfo.setUserInfo(data.name, data.about);
-      profileEditPopup.close();
     })
-    .finally(() => {
-      profileEditPopup.changeButtonText('Сохраненить');
+    .catch((err) => {
+      console.log(err);
     });
 }
 
@@ -122,42 +126,42 @@ function handleCardForm(inputValues) {
     link: inputValues['picture-link'],
   };
 
-  cardAddPopup.changeButtonText('Сохранение...');
-
-  api
+  return api
     .addNewCard(cardData.name, cardData.link)
     .then((data) => {
       renderCard(data);
-      cardAddPopup.close();
     })
-    .finally(() => {
-      cardAddPopup.changeButtonText('Создать');
+    .catch((err) => {
+      console.log(err);
     });
 }
 
 function handleConfirmation(card, cardId) {
-  api.deleteCard(cardId).then(() => {
-    card.deleteCard();
-  });
+  api
+    .deleteCard(cardId)
+    .then(() => {
+      card.deleteCard();
+      cardDeletePopup.close();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 function handleAvatarForm(inputValues) {
-  avatarPopup.changeButtonText('Сохранение...');
-  api
+  return api
     .changeAvatar(inputValues['avatar-link'])
     .then((data) => {
       profileInfo.setUserInfo(data.name, data.about, data.avatar);
-      avatarPopup.close();
     })
-    .finally(() => {
-      avatarPopup.changeButtonText('Сохраненить');
+    .catch((err) => {
+      console.log(err);
     });
 }
 
 editButton.addEventListener('click', function () {
   const userInfo = profileInfo.getUserInfo();
-  nameInput.value = userInfo.userName;
-  descriptionInput.value = userInfo.description;
+  profileEditPopup.setInputValues(userInfo);
   profileEditPopup.open();
 });
 

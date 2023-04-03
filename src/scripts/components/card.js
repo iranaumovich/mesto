@@ -42,13 +42,21 @@ export default class Card {
 
   _like() {
     if (!this._hasLike) {
-      this._handleSetLike().then((data) => {
-        this._changeLikeButton(true, data.likes.length);
-      });
+      this._handleSetLike()
+        .then((data) => {
+          this._changeLikeButton(true, data.likes.length);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     } else {
-      this._handleDeleteLike().then((data) => {
-        this._changeLikeButton(false, data.likes.length);
-      });
+      this._handleDeleteLike()
+        .then((data) => {
+          this._changeLikeButton(false, data.likes.length);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   }
 
